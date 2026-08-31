@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>민쌤영어 Vocab · Set 07</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0B0F1A;
+    --surface: #131929;
+    --surface-hover: #192136;
+    --accent: #7CA7EB;
+    --accent-glow: rgba(124, 167, 235, 0.25);
+    --accent-dim: rgba(124,167,235,0.14);
+    --accent-border: rgba(124,167,235,0.28);
+    --text: #F0EEE8;
+    --text-muted: rgba(240,238,232,0.55);
+    --text-dim: rgba(240,238,232,0.25);
+
+    /* 학습 상태 컬러 */
+    --know: #5FCB8B;
+    --know-dim: rgba(95,203,139,0.14);
+    --know-border: rgba(95,203,139,0.42);
+    --review: #F0A24B;
+    --review-dim: rgba(240,162,75,0.14);
+    --review-border: rgba(240,162,75,0.45);
+
+    /* 카드 뒷면 프리미엄 라이트 테마 변수 */
+    --back-bg: #F7F5F0;
+    --back-text: #111111;
+    --back-muted: #555555;
+    --back-rule: rgba(0,0,0,0.08);
+    --back-ex-bg: rgba(11,15,26,0.04);
+
+    --radius: 22px;
+    --card-w: 400px;
+    --card-h: 560px;
+
+    /* 폰트 스택 최적화 */
+    --font-ko: 'Pretendard', 'Malgun Gothic', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    background: radial-gradient(circle at top center, #161f36 0%, var(--bg) 70%);
+    color: var(--text);
+    font-family: 'DM Sans', var(--font-ko);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  header {
+    width: 100%;
+    max-width: 900px;
+    padding: 2.2rem 2rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 1.3rem;
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .home-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    font-size: 11px; font-weight: 600;
+    padding: 6px 14px; border-radius: 99px;
+    text-decoration: none; transition: all 0.2s ease; letter-spacing: 0.04em;
+  }
+  .home-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .brand { font-size: 14px; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; text-transform: uppercase; }
+  .set-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    width: 100%;
+    max-width: 640px;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1.1rem;
+  }
+  .tool-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    font-family: 'DM Sans', var(--font-ko);
+    font-size: 12px; font-weight: 600;
+    padding: 8px 15px; border-radius: 99px;
+    cursor: pointer; transition: all 0.18s ease; letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .tool-btn:hover { background: rgba(255,255,255,0.09); color: var(--text); border-color: rgba(255,255,255,0.22); }
+  .tool-btn.active {
+    background: var(--accent-dim); border-color: var(--accent); color: var(--accent);
+    box-shadow: 0 0 14px rgba(124,167,235,0.18);
+  }
+  .tool-btn.playing { background: rgba(240,162,75,0.16); border-color: var(--review); color: var(--review); }
+  .tool-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.1); margin: 0 2px; }
+  .speed-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    font-family: 'DM Sans', var(--font-ko);
+    font-size: 12px; font-weight: 600;
+    padding: 8px 10px; border-radius: 99px; cursor: pointer; outline: none;
+  }
+  .speed-select option { background: var(--surface); color: var(--text); }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    width: 100%; max-width: 400px; margin-bottom: 1.4rem; padding: 0 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 9px;
+  }
+  .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), #a0c4ff);
+    border-radius: 99px; transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .progress-text { font-size: 12px; font-weight: 600; color: var(--text-muted); letter-spacing: 0.08em; }
+  .stat-pill { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--text-dim); }
+  .stat-pill b { font-weight: 700; }
+  .stat-know b { color: var(--know); }
+  .stat-review b { color: var(--review); }
+
+  /* ── CARD STAGE ── */
+  .stage {
+    width: var(--card-w); height: var(--card-h);
+    perspective: 2000px; cursor: pointer; outline: none;
+    margin-bottom: 0.5rem;
+    touch-action: pan-y;
+    position: relative;
+  }
+  .card {
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius);
+  }
+  .stage:hover .card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent-glow); }
+  .stage:focus-visible .card { box-shadow: 0 0 0 3px var(--accent); }
+  .card.flipped { transform: rotateY(180deg); }
+
+  /* 뒤집힌 면의 클릭 차단 (Safari backface 이슈 방지) */
+  .card.flipped .front { pointer-events: none; }
+  .card:not(.flipped) .back { pointer-events: none; }
+
+  .face {
+    position: absolute; inset: 0; border-radius: var(--radius);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+
+  /* ── FRONT ── */
+  .front { background: var(--surface); border: 1px solid rgba(255,255,255,0.08); }
+  .front-topbar { display: flex; align-items: center; justify-content: space-between; padding: 22px 26px 0; gap: 10px; }
+  .front-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+  .pos-pill {
+    font-size: 11px; color: var(--accent); background: var(--accent-dim);
+    border: 1px solid var(--accent-border); padding: 4px 12px; border-radius: 99px;
+    font-weight: 600; letter-spacing: 0.04em; white-space: nowrap;
+  }
+  .front-body {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    padding: 24px 32px; overflow-y: auto; scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.12) transparent;
+  }
+  .front-body::-webkit-scrollbar { width: 4px; }
+  .front-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+  .sentence { font-size: 19px; line-height: 1.8; color: rgba(240,238,232,0.92); font-weight: 400; word-break: keep-all; }
+  .sentence .hw {
+    font-size: calc(19px * 1.25); font-weight: 700; color: var(--accent);
+    font-family: 'Playfair Display', serif; display: inline;
+    border-bottom: 2px dashed var(--accent-border); padding-bottom: 2px;
+  }
+  .front-footer { padding: 0 24px 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .ipa-line {
+    font-size: 13px; color: var(--accent); letter-spacing: 0.02em; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; opacity: 0.85;
+  }
+  .speak-row { display: flex; gap: 8px; }
+  .icon-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(124,167,235,0.10);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    font-family: 'DM Sans', var(--font-ko);
+    font-size: 11.5px; font-weight: 600;
+    padding: 6px 13px; border-radius: 99px; cursor: pointer;
+    transition: all 0.18s ease; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .icon-btn:hover { background: var(--accent); color: #0B0F1A; border-color: var(--accent); }
+  .icon-btn.speaking { animation: pulse 0.9s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+  .hint { font-size: 11.5px; color: var(--text-dim); text-align: center; letter-spacing: 0.05em; font-weight: 500; }
+  .deco-bar { height: 4px; background: linear-gradient(90deg, var(--accent) 0%, #a0c4ff 60%, transparent 100%); }
+
+  /* ── BACK ── */
+  .back { background: var(--back-bg); transform: rotateY(180deg); }
+  .back-header {
+    background: #0B0F1A; padding: 20px 26px 17px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .back-word-row { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .back-word {
+    font-family: 'Playfair Display', serif; font-size: 33px; font-weight: 700;
+    color: #ffffff; line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .back-sub { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .back-pos { font-size: 12px; color: var(--accent); letter-spacing: 0.1em; font-weight: 600; }
+  .back-ipa { font-size: 12.5px; color: rgba(240,238,232,0.5); font-family: 'DM Sans', sans-serif; }
+
+  .back-body {
+    flex: 1; padding: 18px 24px 20px;
+    display: flex; flex-direction: column; gap: 14px;
+    overflow-y: auto; scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .back-body::-webkit-scrollbar { width: 5px; }
+  .back-body::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.15); border-radius: 99px; }
+
+  /* 구역 분리 */
+  .sec { display: flex; flex-direction: column; gap: 8px; }
+  .sec + .sec { border-top: 1px solid var(--back-rule); padding-top: 13px; }
+  .sec-title {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 700; color: #8b8f96; font-family: 'DM Sans', var(--font-ko);
+  }
+  .sec-title::before { content: ''; width: 3px; height: 11px; border-radius: 2px; background: #185FA5; }
+  .sec-ex .sec-title::before { background: #2E8B6B; }
+  .sec-deriv .sec-title::before { background: #7B5BB5; }
+  .sec-syn .sec-title::before { background: #1D8FA8; }
+  .sec-etym .sec-title::before { background: #C08A32; }
+  .sec-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+  .meaning-block { display: flex; flex-direction: column; gap: 3px; }
+  .meaning-num { font-size: 10px; color: #185FA5; font-weight: 700; letter-spacing: 0.08em; }
+  .meaning-text {
+    font-size: 15.5px; color: var(--back-text); font-weight: 600; line-height: 1.5;
+    word-break: keep-all; overflow-wrap: break-word; font-family: var(--font-ko);
+  }
+
+  .ex-block {
+    background: var(--back-ex-bg); border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 13px 15px;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .ex-eng { font-size: 13.5px; color: #2b2b2b; line-height: 1.65; }
+  .ex-eng strong { color: #185FA5; font-weight: 700; font-family: 'Playfair Display', serif; font-size: 14.5px; }
+  .ex-kor { font-size: 13px; color: #000000; font-weight: 700; line-height: 1.6; font-family: var(--font-ko); word-break: keep-all; }
+
+  .light-icon-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(24,95,165,0.08); border: 1px solid rgba(24,95,165,0.22);
+    color: #185FA5; font-family: 'DM Sans', var(--font-ko);
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em;
+    padding: 4px 10px; border-radius: 99px; cursor: pointer; transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  .light-icon-btn:hover { background: #185FA5; color: #fff; border-color: #185FA5; }
+  .light-icon-btn.speaking { animation: pulse 0.9s ease-in-out infinite; }
+
+  .deriv-box {
+    font-size: 13px; line-height: 1.7; color: #33313a; font-family: var(--font-ko);
+    background: rgba(123,91,181,0.07); border-left: 3px solid #7B5BB5;
+    border-radius: 0 8px 8px 0; padding: 10px 12px; word-break: keep-all;
+  }
+  .syn-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .syn-chip {
+    font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 99px;
+    background: rgba(29,143,168,0.08); border: 1px solid rgba(29,143,168,0.24);
+    color: #146074; font-family: 'DM Sans', sans-serif;
+  }
+  .etym-box {
+    font-size: 12.8px; line-height: 1.75; color: #3a3630; font-family: var(--font-ko);
+    background: rgba(192,138,50,0.08); border-left: 3px solid #C08A32;
+    border-radius: 0 8px 8px 0; padding: 10px 12px; word-break: keep-all;
+  }
+  .back-deco { height: 4px; background: linear-gradient(90deg, transparent 0%, rgba(124,167,235,0.4) 40%, var(--accent) 100%); }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    position: absolute; inset: 0; border-radius: var(--radius);
+    background: var(--surface); border: 1px dashed rgba(255,255,255,0.14);
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; text-align: center; padding: 30px; z-index: 5;
+  }
+  .empty-state.show { display: flex; }
+  .empty-emoji { font-size: 34px; }
+  .empty-title { font-size: 15px; font-weight: 700; color: var(--text); font-family: var(--font-ko); }
+  .empty-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.7; font-family: var(--font-ko); word-break: keep-all; }
+
+  /* ── STATUS BAR ── */
+  .status-bar { display: flex; gap: 10px; margin-top: 1.1rem; width: var(--card-w); padding: 0 2px; }
+  .st-btn {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted); font-family: 'DM Sans', var(--font-ko);
+    font-size: 13px; font-weight: 600; padding: 11px 0; border-radius: 99px;
+    cursor: pointer; transition: all 0.18s ease;
+  }
+  .st-btn:disabled { opacity: 0.2; cursor: default; }
+  .st-know:hover:not(:disabled) { border-color: var(--know-border); color: var(--know); background: var(--know-dim); }
+  .st-review:hover:not(:disabled) { border-color: var(--review-border); color: var(--review); background: var(--review-dim); }
+  .st-know.on { background: var(--know-dim); border-color: var(--know); color: var(--know); box-shadow: 0 0 14px rgba(95,203,139,0.16); }
+  .st-review.on { background: var(--review-dim); border-color: var(--review); color: var(--review); box-shadow: 0 0 14px rgba(240,162,75,0.16); }
+
+  /* ── NAVIGATION ── */
+  .nav { display: flex; align-items: center; gap: 18px; margin-top: 1rem; }
+  .nav-btn {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted); font-family: 'DM Sans', var(--font-ko);
+    font-size: 13px; font-weight: 600; padding: 11px 26px; border-radius: 99px;
+    cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.02em;
+  }
+  .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .nav-btn:disabled { opacity: 0.15; cursor: default; }
+  .flip-btn {
+    background: var(--accent); border: none; color: #0B0F1A;
+    font-family: 'DM Sans', var(--font-ko); font-size: 14px; font-weight: 700;
+    padding: 11px 36px; border-radius: 99px; cursor: pointer;
+    transition: all 0.2s ease; letter-spacing: 0.04em;
+    box-shadow: 0 4px 15px rgba(124, 167, 235, 0.3);
+  }
+  .flip-btn:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124, 167, 235, 0.4); }
+
+  .kbd-hint {
+    margin-top: 1rem; font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em;
+    font-family: var(--font-ko); text-align: center; padding: 0 1rem; line-height: 1.8;
+  }
+  .kbd-hint kbd {
+    display: inline-block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 5px; padding: 1px 6px; font-family: 'DM Sans', monospace; font-size: 10.5px;
+    color: var(--text-muted); margin: 0 1px;
+  }
+
+  /* ── WORD LIST ── */
+  .wordlist { width: 100%; max-width: 720px; margin-top: 2.4rem; padding: 0 1.5rem 4rem; }
+  .wordlist-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .wordlist-title { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); font-weight: 600; }
+  .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tab {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-muted); font-family: 'DM Sans', var(--font-ko);
+    font-size: 12px; font-weight: 600; padding: 6px 13px; border-radius: 99px;
+    cursor: pointer; transition: all 0.18s ease; white-space: nowrap;
+  }
+  .tab:hover { border-color: rgba(255,255,255,0.24); color: var(--text); }
+  .tab .cnt {
+    font-size: 10.5px; font-weight: 700; background: rgba(255,255,255,0.08);
+    border-radius: 99px; padding: 1px 7px; color: var(--text-muted);
+  }
+  .tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .tab.active .cnt { background: rgba(124,167,235,0.2); color: var(--accent); }
+  .tab[data-f="review"].active { background: var(--review-dim); border-color: var(--review); color: var(--review); }
+  .tab[data-f="review"].active .cnt { background: rgba(240,162,75,0.2); color: var(--review); }
+  .tab[data-f="know"].active { background: var(--know-dim); border-color: var(--know); color: var(--know); }
+  .tab[data-f="know"].active .cnt { background: rgba(95,203,139,0.2); color: var(--know); }
+
+  .wordlist-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    max-height: 220px; overflow-y: auto; padding-right: 6px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .wordlist-grid::-webkit-scrollbar { width: 4px; }
+  .wordlist-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+  .word-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; padding: 6px 14px; border-radius: 99px;
+    border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+    cursor: pointer; transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+  }
+  .word-chip:hover { border-color: rgba(124,167,235,0.4); color: var(--accent); background: rgba(124,167,235,0.05); }
+  .word-chip .badge { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.16); flex: 0 0 auto; }
+  .word-chip.know { border-color: var(--know-border); color: rgba(95,203,139,0.95); background: rgba(95,203,139,0.06); }
+  .word-chip.know .badge { background: var(--know); box-shadow: 0 0 7px rgba(95,203,139,0.7); }
+  .word-chip.review { border-color: var(--review-border); color: rgba(240,162,75,0.95); background: rgba(240,162,75,0.06); }
+  .word-chip.review .badge { background: var(--review); box-shadow: 0 0 7px rgba(240,162,75,0.7); }
+  .word-chip.active {
+    background: var(--accent-dim); border-color: var(--accent); color: var(--accent);
+    font-weight: 600; box-shadow: 0 0 12px rgba(124, 167, 235, 0.15);
+  }
+  .word-chip.active .badge { background: var(--accent); }
+  .word-chip.know.active { background: var(--know-dim); border-color: var(--know); color: var(--know); }
+  .word-chip.know.active .badge { background: var(--know); }
+  .word-chip.review.active { background: var(--review-dim); border-color: var(--review); color: var(--review); }
+  .word-chip.review.active .badge { background: var(--review); }
+  .list-empty { font-size: 12.5px; color: var(--text-dim); font-family: var(--font-ko); padding: 10px 2px; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(14px);
+    background: rgba(19,25,41,0.96); border: 1px solid rgba(255,255,255,0.14);
+    color: var(--text); font-family: var(--font-ko); font-size: 12.5px; font-weight: 600;
+    padding: 10px 20px; border-radius: 99px; letter-spacing: 0.02em;
+    opacity: 0; pointer-events: none; transition: all 0.28s ease; z-index: 99;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.45); max-width: 90vw; text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 480px) {
+    :root { --card-w: calc(100vw - 2rem); --card-h: 540px; }
+    header { padding: 1.5rem 1rem 1rem; }
+    .brand { font-size: 12px; }
+    .set-label { font-size: 11px; }
+    .home-btn { padding: 4px 10px; font-size: 10px; }
+    .toolbar { gap: 6px; }
+    .tool-btn, .speed-select { font-size: 11px; padding: 7px 12px; }
+    .tool-sep { display: none; }
+    .nav { gap: 10px; width: 100%; padding: 0 1rem; }
+    .nav-btn { flex: 1; padding: 11px 0; text-align: center; }
+    .flip-btn { flex: 1.5; padding: 11px 0; text-align: center; }
+    .status-bar { width: 100%; padding: 0 1rem; }
+    .back-word { font-size: 28px; }
+    .sentence { font-size: 17.5px; }
+    .sentence .hw { font-size: calc(17.5px * 1.25); }
+    .wordlist-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: transform 0.01ms; }
+    .icon-btn.speaking, .light-icon-btn.speaking { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <a href="index.html" class="home-btn">← 메인</a>
+    <span class="brand">민쌤영어 · English Lab</span>
+  </div>
+  <span class="set-label">Vocabulary Set 07</span>
+</header>
+
+<div class="toolbar">
+  <button class="tool-btn" id="btnShuffle" type="button" title="단어 순서 무작위 섞기 (S)">🔀 셔플</button>
+  <button class="tool-btn" id="btnAuto" type="button" title="자동 재생 (P)">▶ 자동재생</button>
+  <select class="speed-select" id="selSpeed" title="자동재생 간격" aria-label="자동재생 간격">
+    <option value="3000">3초</option>
+    <option value="5000" selected>5초</option>
+    <option value="8000">8초</option>
+    <option value="12000">12초</option>
+  </select>
+  <span class="tool-sep"></span>
+  <button class="tool-btn" id="btnAutoSpeak" type="button" title="카드가 바뀔 때 자동으로 발음">🔊 자동발음</button>
+  <button class="tool-btn" id="btnReset" type="button" title="학습 상태 초기화">↺ 초기화</button>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:2%"></div></div>
+  <div class="progress-meta">
+    <span class="progress-text" id="progressText">1 / 50</span>
+    <span class="stat-pill stat-know">암기 <b id="statKnow">0</b></span>
+    <span class="stat-pill stat-review">복습 <b id="statReview">0</b></span>
+    <span class="stat-pill">미분류 <b id="statNone">50</b></span>
+  </div>
+</div>
+
+<div class="stage" id="stage" tabindex="0" role="button" aria-label="카드 뒤집기">
+  <div class="card" id="card">
+    <div class="face front" id="frontFace">
+      <div class="front-topbar">
+        <span class="front-label" id="fLabel">민쌤영어 · vocab</span>
+        <span class="pos-pill" id="fPos">v.</span>
+      </div>
+      <div class="front-body">
+        <p class="sentence" id="fSentence"></p>
+      </div>
+      <div class="front-footer">
+        <div class="ipa-line" id="fIpa"></div>
+        <div class="speak-row">
+          <button class="icon-btn" id="fSpeakWord" type="button" aria-label="단어 발음 듣기">🔊 단어</button>
+          <button class="icon-btn" id="fSpeakSent" type="button" aria-label="예문 발음 듣기">🔊 예문</button>
+        </div>
+        <div class="hint">탭 · 스페이스바로 뜻 확인 → &nbsp;|&nbsp; 좌우 스와이프 이동</div>
+      </div>
+      <div class="deco-bar"></div>
+    </div>
+    <div class="face back" id="backFace">
+      <div class="back-header">
+        <div class="back-word-row">
+          <div class="back-word" id="bWord"></div>
+          <button class="icon-btn" id="bSpeakWord" type="button" aria-label="단어 발음 듣기">🔊</button>
+        </div>
+        <div class="back-sub">
+          <span class="back-pos" id="bPos"></span>
+          <span class="back-ipa" id="bIpa"></span>
+        </div>
+      </div>
+      <div class="back-body" id="bBody"></div>
+      <div class="back-deco"></div>
+    </div>
+  </div>
+  <div class="empty-state" id="emptyState">
+    <div class="empty-emoji">🎉</div>
+    <div class="empty-title" id="emptyTitle">해당 조건의 단어가 없습니다</div>
+    <div class="empty-desc" id="emptyDesc">필터를 '전체보기'로 바꾸거나 다른 단어를 분류해 보세요.</div>
+  </div>
+</div>
+
+<div class="status-bar">
+  <button class="st-btn st-know" id="btnKnow" type="button">✓ 알아요</button>
+  <button class="st-btn st-review" id="btnReview" type="button">↻ 모르겠어요</button>
+</div>
+
+<div class="nav">
+  <button class="nav-btn" id="btnPrev" type="button">← 이전</button>
+  <button class="flip-btn" id="btnFlip" type="button">뒤집기</button>
+  <button class="nav-btn" id="btnNext" type="button">다음 →</button>
+</div>
+
+<div class="kbd-hint">
+  <kbd>←</kbd><kbd>→</kbd> 이동 · <kbd>Space</kbd> 뒤집기 · <kbd>K</kbd> 알아요 · <kbd>J</kbd> 모르겠어요 · <kbd>V</kbd> 발음 · <kbd>S</kbd> 셔플 · <kbd>P</kbd> 자동재생<br>
+  모바일: 좌우 스와이프 = 이전/다음 · 위아래 스와이프 = 뒤집기
+</div>
+
+<div class="wordlist">
+  <div class="wordlist-head">
+    <div class="wordlist-title">Set 07 단어 목록</div>
+    <div class="filter-tabs" id="filterTabs" role="tablist">
+      <button class="tab active" data-f="all" type="button" role="tab">전체보기 <span class="cnt" id="cntAll">50</span></button>
+      <button class="tab" data-f="review" type="button" role="tab">모르는 단어만 <span class="cnt" id="cntReview">0</span></button>
+      <button class="tab" data-f="know" type="button" role="tab">암기 완료 <span class="cnt" id="cntKnow">0</span></button>
+    </div>
+  </div>
+  <div class="wordlist-grid" id="wordGrid"></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ────────────────────────────────────────────────────────────────
+   DATA
+   구조: word / pronun(발음기호) / pos / meanings[] / sentence /
+        translation / syn[](유의어) / deriv(파생어) / etym(어근)
+   ※ syn · deriv · etym 은 생략 가능 — 없으면 해당 구역이 렌더링되지 않음
+   ──────────────────────────────────────────────────────────────── */
+const DATA = [
+  {
+    word: "uncover",
+    pronun: "/ʌnˈkʌvər/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"(숨겨진 사실을) 밝혀내다, 드러내다" },
+      { num:"②", text:"덮개를 벗기다" }
+    ],
+    sentence: "The audit {uncovered} a series of small errors that had gone unnoticed for years.",
+    translation: "그 감사는 수년간 눈에 띄지 않았던 일련의 사소한 오류들을 밝혀냈다.",
+    syn: ["reveal", "expose", "unearth", "disclose"],
+    deriv: "cover v./n. 덮다, 덮개 · uncovered a. 드러난, 무방비의 ↔ cover up 은폐하다",
+    etym: "un-(반대로) + cover(덮다) → 덮인 것을 벗겨 드러내다"
+  },
+  {
+    word: "vacant",
+    pronun: "/ˈveɪkənt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"비어 있는, 공실인" },
+      { num:"②", text:"공석인 (a vacant position)" },
+      { num:"③", text:"(표정이) 멍한" }
+    ],
+    sentence: "The position remained {vacant} for months because no candidate met all the requirements.",
+    translation: "그 자리는 모든 요건을 충족하는 지원자가 없었기 때문에 몇 달 동안 공석으로 남아 있었다.",
+    syn: ["empty", "unoccupied", "unfilled", "blank"],
+    deriv: "vacancy n. 공석, 빈자리 · vacate v. 비우다 · vacation n. 휴가(같은 어근)",
+    etym: "라틴어 vacare(비어 있다, be empty) → 아무도 채우지 않은 상태 · cf. vacate, evacuate, vacuum"
+  },
+  {
+    word: "vehement",
+    pronun: "/ˈviːəmənt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"(감정·주장이) 격렬한, 맹렬한" }
+    ],
+    sentence: "Her {vehement} objection to the plan surprised colleagues who had never seen her raise her voice.",
+    translation: "그 계획에 대한 그녀의 격렬한 반대는 그녀가 목소리를 높이는 것을 한 번도 본 적 없던 동료들을 놀라게 했다.",
+    syn: ["fervent", "passionate", "intense", "forceful"],
+    deriv: "vehemence n. 격렬함 · vehemently ad. 격렬하게",
+    etym: "라틴어 vehemens(격렬한) ← 어원 불확실, 아마도 vehere(나르다, carry)와 관련 → 감정에 실려 격렬해진"
+  },
+  {
+    word: "vibrant",
+    pronun: "/ˈvaɪbrənt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"활기 넘치는, 생기 있는" },
+      { num:"②", text:"(색채가) 선명한, 강렬한" }
+    ],
+    sentence: "The market square came alive with {vibrant} colors and the smell of fresh spices each morning.",
+    translation: "그 시장 광장은 매일 아침 활기 넘치는 색채와 신선한 향신료 냄새로 생기를 띠었다.",
+    syn: ["lively", "dynamic", "vivid", "energetic"],
+    deriv: "vibrancy n. 활기, 생동감 · vibrate v. 진동하다 · vibration n. 진동",
+    etym: "라틴어 vibrare(흔들다, shake) → 떨림처럼 생동감이 느껴지는 · cf. vibrate, vibration"
+  },
+  {
+    word: "warehouse",
+    pronun: "/ˈwerhaʊs/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"창고" }
+    ],
+    sentence: "The old {warehouse} by the river was converted into loft apartments last year.",
+    translation: "강가의 그 낡은 창고는 작년에 로프트 아파트로 개조되었다.",
+    syn: ["storehouse", "depot", "stockroom"],
+    deriv: "warehousing n. 창고 보관(업) · data warehouse (컴퓨터) 데이터 웨어하우스",
+    etym: "ware(상품, goods) + house(건물) → 물건을 보관하는 건물"
+  },
+  {
+    word: "whimsical",
+    pronun: "/ˈwɪmzɪkl/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"엉뚱한, 기발한, 변덕스러운" }
+    ],
+    sentence: "The children's book was filled with {whimsical} illustrations of animals wearing tiny hats.",
+    translation: "그 동화책은 작은 모자를 쓴 동물들의 기발한 삽화로 가득했다.",
+    syn: ["fanciful", "quirky", "playful", "capricious"],
+    deriv: "whimsically ad. 엉뚱하게 · whim n. 변덕, 즉흥적 생각",
+    etym: "whim(변덕, 엉뚱한 생각) + -sical(형용사 접미사) → 즉흥적이고 기발한 성질의"
+  },
+  {
+    word: "wholesome",
+    pronun: "/ˈhoʊlsəm/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"건전한, 건강에 좋은 (음식·생활 방식)" },
+      { num:"②", text:"(도덕적으로) 건전한, 유익한" }
+    ],
+    sentence: "She wanted her children to grow up with {wholesome} meals and plenty of time outdoors.",
+    translation: "그녀는 자녀들이 건강에 좋은 식사와 충분한 야외 활동 시간 속에서 자라기를 원했다.",
+    syn: ["healthy", "nutritious", "beneficial", "salutary"],
+    deriv: "wholesomeness n. 건전함 · whole a. 전체의, 온전한(같은 어근)",
+    etym: "whole(온전한, 건강한) + -some(~한 성질의) → 몸과 마음을 온전하게 하는 · cf. whole, healthy(다른 어원이지만 뜻이 관련)"
+  },
+  {
+    word: "wipe out",
+    pronun: "/waɪp aʊt/",
+    pos: "phr. v.",
+    meanings: [
+      { num:"①", text:"전멸시키다, 완전히 없애버리다" },
+      { num:"②", text:"(부채·기록 등을) 지우다, 청산하다" }
+    ],
+    sentence: "A single disease nearly {wiped out} the entire population of that rare frog species.",
+    translation: "단 하나의 질병이 그 희귀 개구리 종 전체 개체군을 거의 전멸시킬 뻔했다.",
+    syn: ["annihilate", "eradicate", "exterminate", "obliterate"],
+    deriv: "wipe v. 닦다, 훔치다 · wipeout n. (구어) 대실패, (서핑) 넘어짐",
+    etym: "wipe(닦다) + out(완전히) → 흔적 하나 남기지 않고 완전히 닦아 없애다"
+  },
+  {
+    word: "with respect to",
+    pronun: "/wɪð rɪˈspekt tuː/",
+    pos: "phr.",
+    meanings: [
+      { num:"①", text:"~에 관해서는, ~와 관련하여 (= regarding, concerning)" }
+    ],
+    sentence: "{With respect to} funding, the university has not yet made a final decision.",
+    translation: "자금 지원에 관해서는, 그 대학은 아직 최종 결정을 내리지 않았다.",
+    syn: ["regarding", "concerning", "as regards", "in relation to"],
+    deriv: "respect n./v. 존중, 측면 · in this respect 이 점에 있어서 · with regard to(동의 표현)",
+    etym: "respect(측면, 관점) + to → 그 측면·관점에 대하여"
+  },
+  {
+    word: "worldly",
+    pronun: "/ˈwɜːrldli/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"세속적인, 세상의 (worldly success 세속적 성공)" },
+      { num:"②", text:"세상 물정에 밝은, 산전수전 다 겪은" }
+    ],
+    sentence: "Despite his {worldly} success, he still preferred a quiet evening at home to any party.",
+    translation: "그는 세속적인 성공을 거두었음에도 여전히 어떤 파티보다 집에서의 조용한 저녁을 선호했다.",
+    syn: ["materialistic", "sophisticated", "earthly", "secular"],
+    deriv: "world n. 세상 · worldliness n. 세속성 · worldly-wise a. 세상 물정에 밝은 ↔ otherworldly a. 초세속적인",
+    etym: "world(세상) + -ly(형용사 접미사) → 세상에 속한, 세속에 관한"
+  },
+  {
+    word: "abet",
+    pronun: "/əˈbet/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"(범죄를) 교사하다, 부추기다 (aid and abet 방조하다)" }
+    ],
+    sentence: "He was charged with helping to {abet} the robbery, even though he never entered the store.",
+    translation: "그는 결코 가게 안에 들어가지 않았음에도 그 강도 행위를 부추긴 혐의로 기소되었다.",
+    syn: ["incite", "encourage", "instigate", "aid"],
+    deriv: "abetment n. 교사, 방조 · abettor n. 교사자, 방조자 · aid and abet 방조하다(관용구)",
+    etym: "고대 프랑스어 abeter(부추기다, 사냥개를 부추겨 물게 하다) ← a-(~에게) + beter(물다, bait) → 물도록 부추기다"
+  },
+  {
+    word: "accentuate",
+    pronun: "/əkˈsentʃueɪt/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"강조하다, 두드러지게 하다" }
+    ],
+    sentence: "The dim lighting was chosen to {accentuate} the sharp lines of the sculpture.",
+    translation: "그 은은한 조명은 그 조각상의 날카로운 선을 두드러지게 하기 위해 선택되었다.",
+    syn: ["emphasize", "highlight", "underscore", "intensify"],
+    deriv: "accent n. 강세, 억양 · accentuation n. 강조",
+    etym: "ac-(~에) + cent(노래하다, sing — cantus 어근에서 강세로 확장) → 특정 부분에 강세를 두어 두드러지게 하다 · cf. accent, chant"
+  },
+  {
+    word: "adore",
+    pronun: "/əˈdɔːr/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"흠모하다, 매우 좋아하다, 아주 사랑하다" },
+      { num:"②", text:"(신을) 숭배하다" }
+    ],
+    sentence: "The whole neighborhood {adored} the old baker who always gave the children free samples.",
+    translation: "동네 전체가 아이들에게 항상 무료 시식용을 주던 그 나이 든 제빵사를 흠모했다.",
+    syn: ["cherish", "idolize", "love dearly", "worship"],
+    deriv: "adorable a. 사랑스러운 · adoration n. 흠모, 숭배 · adoring a. 흠모하는",
+    etym: "ad-(~에게) + or(말하다, 기도하다, speak/pray — orare) → 기도하듯 우러러 사랑하다 · cf. oracle, orator"
+  },
+  {
+    word: "advocacy",
+    pronun: "/ˈædvəkəsi/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"옹호, 지지 활동, 대변" }
+    ],
+    sentence: "Her {advocacy} for disabled students led to major changes in the school's building design.",
+    translation: "장애 학생을 위한 그녀의 옹호 활동은 그 학교 건물 설계에 큰 변화를 가져왔다.",
+    syn: ["support", "championing", "promotion", "backing"],
+    deriv: "advocate n. 옹호자 v. 옹호하다 · advocacy group 옹호 단체, 로비 단체",
+    etym: "ad-(~에게) + voc(부르다, call) → 도움을 요청하러 불려온 변호인 → 대신 목소리를 내어 지지함 · cf. vocal, vocation, invoke"
+  },
+  {
+    word: "ameliorate",
+    pronun: "/əˈmiːliəreɪt/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"(격식) 개선하다, 완화하다" }
+    ],
+    sentence: "The new policy was designed to {ameliorate} the housing shortage in the city's poorest districts.",
+    translation: "그 새 정책은 그 도시에서 가장 가난한 지역의 주택 부족을 개선하기 위해 고안되었다.",
+    syn: ["improve", "alleviate", "mitigate", "enhance"],
+    deriv: "amelioration n. 개선 ※ meliorism n. 개량주의(같은 어근)",
+    etym: "a(d)-(~쪽으로) + melior(더 나은, better) → 더 나은 방향으로 가게 하다 · cf. meliorism"
+  },
+  {
+    word: "amount to",
+    pronun: "/əˈmaʊnt tuː/",
+    pos: "phr. v.",
+    meanings: [
+      { num:"①", text:"(합계가) ~에 달하다, 이르다" },
+      { num:"②", text:"(사실상) ~와 마찬가지이다, ~나 다름없다" }
+    ],
+    sentence: "His silence at the meeting {amounted to} agreement, though he later denied it.",
+    translation: "그 회의에서의 그의 침묵은 사실상 동의와 마찬가지였지만, 그는 나중에 그것을 부인했다.",
+    syn: ["add up to", "equal", "constitute", "total"],
+    deriv: "amount n. 양, 액수 v. 총계가 ~에 이르다",
+    etym: "amount(총량) + to → 합쳐진 결과가 어떤 지점에 이르다"
+  },
+  {
+    word: "antiquated",
+    pronun: "/ˈæntɪkweɪtɪd/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"(제도·기계 등이) 구식의, 낡은, 시대에 뒤떨어진" }
+    ],
+    sentence: "The factory still relied on {antiquated} machinery that broke down almost every week.",
+    translation: "그 공장은 여전히 거의 매주 고장 나는 구식 기계에 의존하고 있었다.",
+    syn: ["outdated", "obsolete", "outmoded", "archaic"],
+    deriv: "antiquate v. 구식으로 만들다 · antique a./n. 골동품(의) · antiquity n. 고대",
+    etym: "라틴어 antiquus(옛날의) → 이미 낡아 시대에 뒤처진 · cf. antique, antiquity"
+  },
+  {
+    word: "apartheid",
+    pronun: "/əˈpɑːrtheɪt/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(역사, 남아공) 인종 분리 정책" },
+      { num:"②", text:"(비유) 극단적인 차별·분리 정책" }
+    ],
+    sentence: "The country's history of {apartheid} still shapes debates about land ownership today.",
+    translation: "그 나라의 인종 분리 정책의 역사는 오늘날까지도 토지 소유권에 관한 논쟁에 영향을 미치고 있다.",
+    syn: ["racial segregation", "discrimination"],
+    deriv: "※ 남아프리카공화국의 실제 역사적 제도(1948–1994년)를 가리키는 고유명사적 용어",
+    etym: "아프리칸스어(남아공어) apartheid ← apart(분리된) + -heid(-hood, 상태) → '분리 상태'라는 뜻의 남아공어"
+  },
+  {
+    word: "ardent",
+    pronun: "/ˈɑːrdnt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"열렬한, 열정적인 (an ardent supporter)" }
+    ],
+    sentence: "An {ardent} supporter of the local team, he never missed a home game in twenty years.",
+    translation: "그 지역 팀의 열렬한 지지자인 그는 20년 동안 홈경기를 단 한 번도 놓치지 않았다.",
+    syn: ["fervent", "passionate", "zealous", "devoted"],
+    deriv: "ardently ad. 열렬하게 · ardor n. 열정, 열의",
+    etym: "라틴어 ardere(불타다, burn) → 마음이 불타오르는 듯 열렬한 · cf. ardor, arson(방화, 같은 어근)"
+  },
+  {
+    word: "aristocratic",
+    pronun: "/əˌrɪstəˈkrætɪk/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"귀족적인, 귀족의" },
+      { num:"②", text:"(태도가) 고상한, 품위 있는" }
+    ],
+    sentence: "The mansion's {aristocratic} style reflected the wealth of the family who once owned it.",
+    translation: "그 저택의 귀족적인 양식은 한때 그곳을 소유했던 가문의 부를 반영했다.",
+    syn: ["noble", "upper-class", "patrician", "blue-blooded"],
+    deriv: "aristocracy n. 귀족제, 귀족 계급 · aristocrat n. 귀족",
+    etym: "그리스어 aristos(최선의, best) + kratos(지배, rule) → 최선의 사람들에 의한 지배 · cf. democracy, bureaucracy"
+  },
+  {
+    word: "ashamed",
+    pronun: "/əˈʃeɪmd/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"부끄러운, 수치스러운 (be ashamed of/for)" }
+    ],
+    sentence: "He felt {ashamed} for having forgotten his best friend's birthday.",
+    translation: "그는 가장 친한 친구의 생일을 잊어버린 것에 대해 부끄러움을 느꼈다.",
+    syn: ["embarrassed", "humiliated", "mortified", "remorseful"],
+    deriv: "shame n. 수치심 v. 부끄럽게 만들다 · shameful a. 수치스러운(행동을 묘사) · shameless a. 파렴치한",
+    etym: "a-(강조) + shamed(부끄러워진 ← shame 수치) → 강하게 부끄러움을 느끼는 상태"
+  },
+  {
+    word: "assort",
+    pronun: "/əˈsɔːrt/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"구색을 갖추다, 갖가지로 분류하다" },
+      { num:"※", text:"주로 assorted(여러 가지의, 다양한) 형태로 자주 쓰임" }
+    ],
+    sentence: "The shop {assorts} its products by color, making it easy for customers to find matching items.",
+    translation: "그 가게는 상품을 색상별로 분류해서 고객이 어울리는 물건을 쉽게 찾을 수 있게 한다.",
+    syn: ["sort", "classify", "arrange", "categorize"],
+    deriv: "assorted a. 여러 가지의, 다양한 · assortment n. 모음, 구색",
+    etym: "as-(~에) + sort(종류, 분류) → 종류별로 나누어 놓다 · cf. sort, sorting"
+  },
+  {
+    word: "assuage",
+    pronun: "/əˈsweɪdʒ/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"(고통·분노·불안 등을) 완화하다, 달래다" }
+    ],
+    sentence: "The manager's calm apology helped {assuage} the customer's anger almost immediately.",
+    translation: "그 매니저의 차분한 사과는 거의 즉시 고객의 분노를 달래는 데 도움이 되었다.",
+    syn: ["alleviate", "soothe", "mitigate", "allay"],
+    deriv: "assuagement n. 완화",
+    etym: "as-(강조) + suav(달콤한, 부드러운, sweet — suavis) → 부드럽게 달래어 진정시키다 · cf. suave, persuade(다른 어근)"
+  },
+  {
+    word: "attendant",
+    pronun: "/əˈtendənt/",
+    pos: "a. / n.",
+    meanings: [
+      { num:"①", text:"(a.) 수행하는, 부수적인 (attendant problems 부수적인 문제들)" },
+      { num:"②", text:"(n.) (시설의) 안내원, 종업원" }
+    ],
+    sentence: "The rise in tourism brought {attendant} problems, including traffic and noise complaints.",
+    translation: "관광객 증가는 교통 체증과 소음 민원을 포함한 부수적인 문제들을 가져왔다.",
+    syn: ["accompanying", "associated", "concomitant", "related"],
+    deriv: "attend v. 참석하다, 시중들다 · attendance n. 출석 · flight attendant 승무원",
+    etym: "at-(~쪽으로) + tend(뻗다, 향하다, stretch) → 곁에 붙어 딸려 있는 · cf. attend, tendency, extend"
+  },
+  {
+    word: "caliber",
+    pronun: "/ˈkælɪbər/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(사람·작품의) 역량, 재능의 수준, 자질" },
+      { num:"②", text:"(총의) 구경" }
+    ],
+    sentence: "A musician of her {caliber} rarely performs in venues this small.",
+    translation: "그녀 정도 역량을 가진 음악가는 이렇게 작은 공연장에서 좀처럼 공연하지 않는다.",
+    syn: ["quality", "competence", "stature", "distinction"],
+    deriv: "high-caliber a. 고급의, 뛰어난 · low-caliber a. 저급의",
+    etym: "아랍어 qalib(주형, mold) → 총알을 만드는 틀의 지름 → 총의 구경 → (비유) 사람의 그릇, 역량"
+  },
+  {
+    word: "choke",
+    pronun: "/tʃoʊk/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"숨이 막히다, 질식하다" },
+      { num:"②", text:"질식시키다, 목을 조르다" },
+      { num:"③", text:"(중요한 순간에) 실수하다, 압박감에 무너지다 (비격식)" }
+    ],
+    sentence: "Thick smoke began to {choke} the firefighters as they searched the burning building.",
+    translation: "불타는 건물을 수색하던 소방관들은 짙은 연기에 숨이 막히기 시작했다.",
+    syn: ["suffocate", "strangle", "stifle", "gag"],
+    deriv: "choke up (감정이 북받쳐) 목이 메다 · choking a. 숨 막히는",
+    etym: "고대영어 ceocian(목을 조르다) → 게르만어 공통 어근 → 숨통이 막히는 행위"
+  },
+  {
+    word: "clear-cut",
+    pronun: "/ˌklɪərˈkʌt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"명확한, 분명한, 뚜렷한" }
+    ],
+    sentence: "There was no {clear-cut} answer to the ethical question the students debated for hours.",
+    translation: "학생들이 몇 시간 동안 토론했던 그 윤리적 질문에는 명확한 답이 없었다.",
+    syn: ["unambiguous", "definite", "precise", "straightforward"],
+    deriv: "clear a. 명확한 · cut(잘라낸) → 형용사 합성어",
+    etym: "clear(명확한) + cut(잘라낸) → 깔끔하게 잘려 경계가 뚜렷한 → 애매함이 없는"
+  },
+  {
+    word: "coarse",
+    pronun: "/kɔːrs/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"(직물·표면이) 거친, 굵은" },
+      { num:"②", text:"(말·행동이) 상스러운, 천박한" },
+      { num:"※", text:"course(과정, 코스)와 동음이의어" }
+    ],
+    sentence: "The {coarse} fabric was durable but far too rough to wear against bare skin.",
+    translation: "그 거친 원단은 내구성은 좋았지만 맨살에 걸치기에는 너무 까칠했다.",
+    syn: ["rough", "rugged", "crude", "vulgar"],
+    deriv: "coarsely ad. 거칠게 · coarsen v. 거칠어지다 ※ course(과정)와 발음 동일, 철자 다름 주의",
+    etym: "중세영어 cors(보통의, 흔한 ← course의 변형, '일상적인'이 '조잡한'으로 의미 변화) → 다듬어지지 않은"
+  },
+  {
+    word: "come by",
+    pronun: "/kʌm baɪ/",
+    pos: "phr. v.",
+    meanings: [
+      { num:"①", text:"(어렵게) 얻다, 구하다 (주로 difficult/hard to come by)" },
+      { num:"②", text:"잠깐 들르다" }
+    ],
+    sentence: "Reliable information about the remote village was difficult to {come by} before the road was built.",
+    translation: "그 도로가 건설되기 전에는 그 외딴 마을에 관한 신뢰할 만한 정보를 얻기 어려웠다.",
+    syn: ["obtain", "acquire", "procure", "get hold of"],
+    deriv: "come across ~을 우연히 발견하다 · come along 함께 가다, 나타나다",
+    etym: "come(오다) + by(옆으로) → 옆을 지나가다가 손에 넣게 되다"
+  },
+  {
+    word: "come to terms with",
+    pronun: "/kʌm tuː tɜːrmz wɪð/",
+    pos: "phr.",
+    meanings: [
+      { num:"①", text:"(힘든 상황·사실을) 받아들이다, 감수하다" }
+    ],
+    sentence: "It took her years to {come to terms with} the loss of the family farm.",
+    translation: "그녀가 그 가족 농장을 잃은 것을 받아들이기까지는 몇 년이 걸렸다.",
+    syn: ["accept", "reconcile oneself to", "make peace with"],
+    deriv: "terms n. 조건, 관계 (be on good terms with ~와 사이가 좋다) · in terms of ~의 측면에서",
+    etym: "come to(도달하다) + terms(합의 조건) + with → 어려운 사실과 타협·합의에 이르다"
+  },
+  {
+    word: "compete for",
+    pronun: "/kəmˈpiːt fɔːr/",
+    pos: "phr. v.",
+    meanings: [
+      { num:"①", text:"~을 두고 경쟁하다, 겨루다" }
+    ],
+    sentence: "Dozens of students {competed for} the single scholarship offered by the foundation.",
+    translation: "수십 명의 학생들이 그 재단이 제공하는 단 하나의 장학금을 두고 경쟁했다.",
+    syn: ["vie for", "contend for", "fight for"],
+    deriv: "compete v. 경쟁하다 · competition n. 경쟁 · competitor n. 경쟁자",
+    etym: "com-(함께) + pet(추구하다, seek) → 같은 목표를 함께 추구하며 겨루다 · cf. petition, appetite, competitive"
+  },
+  {
+    word: "condescending",
+    pronun: "/ˌkɑːndɪˈsendɪŋ/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"거만한, 잘난 체하는, 상대를 얕보는" }
+    ],
+    sentence: "His {condescending} tone made it clear he did not think she was capable of the job.",
+    translation: "그의 거만한 어조는 그가 그녀를 그 일을 해낼 능력이 없다고 여긴다는 것을 분명히 드러냈다.",
+    syn: ["patronizing", "supercilious", "haughty", "disdainful"],
+    deriv: "condescend v. 거들먹거리다, (짐짓) 자신을 낮추다 · condescension n. 거만한 태도",
+    etym: "con-(강조) + de-(아래로) + scend(오르다·내리다, climb) → 짐짓 아래로 내려와 주는 척하는 태도 · cf. ascend, descend, transcend"
+  },
+  {
+    word: "conjecture",
+    pronun: "/kənˈdʒektʃər/",
+    pos: "n. / v.",
+    meanings: [
+      { num:"①", text:"(n.) 추측, 억측 (근거가 불확실한)" },
+      { num:"②", text:"(v.) 추측하다" }
+    ],
+    sentence: "Without any solid evidence, the report was based largely on {conjecture}.",
+    translation: "확실한 증거 없이, 그 보고서는 대체로 추측에 근거하고 있었다.",
+    syn: ["speculation", "guesswork", "supposition", "surmise"],
+    deriv: "conjectural a. 추측에 근거한",
+    etym: "con-(함께) + ject(던지다, throw) → 여러 단서를 던져 짜 맞추어 추측함 · cf. reject, project, subject"
+  },
+  {
+    word: "construe",
+    pronun: "/kənˈstruː/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"(특정한 의미로) 해석하다" }
+    ],
+    sentence: "Her silence was {construed} by some as agreement, though she had simply not been listening.",
+    translation: "그녀의 침묵은 일부에게 동의로 해석되었지만, 사실 그녀는 그저 듣고 있지 않았던 것이었다.",
+    syn: ["interpret", "read", "understand", "take"],
+    deriv: "misconstrue v. 오해하다, 잘못 해석하다 ※ construct(건설하다)와 어원은 관련 있으나 뜻이 다름",
+    etym: "con-(함께) + stru(쌓다, build) → 단서들을 쌓아 올려 의미를 만들어내다 · cf. construct, structure, instruct"
+  },
+  {
+    word: "conundrum",
+    pronun: "/kəˈnʌndrəm/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"난제, 곤란한 문제" },
+      { num:"②", text:"(옛 용법) 수수께끼" }
+    ],
+    sentence: "The company faced a {conundrum}: lower prices to compete, or maintain quality and lose customers.",
+    translation: "그 회사는 난제에 직면했다. 경쟁하기 위해 가격을 낮추느냐, 아니면 품질을 유지하고 고객을 잃느냐였다.",
+    syn: ["dilemma", "puzzle", "predicament", "quandary"],
+    deriv: "※ 16세기 옥스퍼드 대학 은어에서 유래한 것으로 추정, 정확한 어원 불확실",
+    etym: "어원 불확실 — 16세기 영어에서 '수수께끼 같은 사람·문제'라는 뜻으로 갑자기 등장, 학자들의 라틴어 조어 장난에서 비롯되었다는 설이 유력"
+  },
+  {
+    word: "corpse",
+    pronun: "/kɔːrps/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"시체, 시신 (사람의 것에 주로 사용)" }
+    ],
+    sentence: "The novel opens with the discovery of a {corpse} in an abandoned lighthouse.",
+    translation: "그 소설은 버려진 등대에서 시체가 발견되는 장면으로 시작한다.",
+    syn: ["cadaver", "dead body", "remains"],
+    deriv: "※ corps(군단, 부대)와 철자 유사하나 발음이 다름 [kɔːr] · corpsman n. 위생병(군대)",
+    etym: "라틴어 corpus(몸, body) → 생명이 없는 몸 · cf. corporate, corpus, incorporate"
+  },
+  {
+    word: "daunting",
+    pronun: "/ˈdɔːntɪŋ/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"(과제 등이) 벅찬, 주눅 들게 하는, 겁먹게 하는" }
+    ],
+    sentence: "Climbing the mountain without a guide seemed like a {daunting} task for first-time hikers.",
+    translation: "가이드 없이 그 산을 오르는 것은 처음 등산하는 사람들에게 벅찬 과제처럼 보였다.",
+    syn: ["intimidating", "formidable", "overwhelming", "forbidding"],
+    deriv: "daunt v. 기를 꺾다, 겁먹게 하다 ↔ undaunted a. 굴하지 않는",
+    etym: "라틴어 domitare(길들이다, tame) → 기세를 꺾어 굴복시키다 → 위축되게 만들다 · cf. dominate, domesticate"
+  },
+  {
+    word: "decoration",
+    pronun: "/ˌdekəˈreɪʃn/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"장식, 장식물" },
+      { num:"②", text:"(군대) 훈장" }
+    ],
+    sentence: "The classroom was covered in colorful {decorations} made entirely by the students themselves.",
+    translation: "그 교실은 전적으로 학생들 스스로 만든 화려한 장식들로 뒤덮여 있었다.",
+    syn: ["ornament", "adornment", "embellishment"],
+    deriv: "decorate v. 장식하다 · decorative a. 장식용의 · decorator n. 실내 장식가",
+    etym: "라틴어 decorare(꾸미다) ← decus(아름다움, 명예) → 아름답게 꾸미는 것 · cf. decorous, decor"
+  },
+  {
+    word: "deluge",
+    pronun: "/ˈdeljuːdʒ/",
+    pos: "n. / v.",
+    meanings: [
+      { num:"①", text:"(n.) 폭우, 대홍수" },
+      { num:"②", text:"(n.) (감당 못 할 만큼의) 쇄도" },
+      { num:"③", text:"(v.) 쇄도하게 하다, 침수시키다 (주로 수동태)" }
+    ],
+    sentence: "A {deluge} of applications arrived within hours of the job posting going online.",
+    translation: "그 채용 공고가 온라인에 게시된 지 몇 시간 만에 지원서가 쇄도했다.",
+    syn: ["flood", "downpour", "inundation", "torrent"],
+    deriv: "deluged a. 쇄도로 뒤덮인 · antediluvian a. 대홍수 이전의, 아주 구식의",
+    etym: "라틴어 diluvium(홍수) ← di-(강조) + luere(씻다, wash) → 성경의 대홍수(Noah's flood)를 가리키던 말에서 유래 · cf. antediluvian"
+  },
+  {
+    word: "destitute",
+    pronun: "/ˈdestɪtuːt/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"극빈한, 궁핍한, 무일푼의" },
+      { num:"②", text:"(destitute of) ~이 전혀 없는" }
+    ],
+    sentence: "The charity provides food and shelter to families left {destitute} after the flood.",
+    translation: "그 자선단체는 홍수 이후 극빈 상태에 처한 가족들에게 식량과 거처를 제공한다.",
+    syn: ["impoverished", "penniless", "indigent", "poverty-stricken"],
+    deriv: "destitution n. 극빈, 궁핍",
+    etym: "de-(완전히) + stitute(세우다, set — statuere) → 아무것도 세워 놓지 못한 채 완전히 버려진 상태 · cf. constitute, institute, substitute"
+  },
+  {
+    word: "deviance",
+    pronun: "/ˈdiːviəns/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(사회 규범으로부터의) 일탈, 벗어남" }
+    ],
+    sentence: "Sociologists study how societies decide what counts as {deviance} and what is simply difference.",
+    translation: "사회학자들은 사회가 무엇을 일탈로 규정하고 무엇을 단순한 차이로 규정하는지를 연구한다.",
+    syn: ["deviation", "nonconformity", "aberration"],
+    deriv: "deviant a. 일탈적인 n. 일탈자 · deviate v. 벗어나다 ※ deviation(더 일반적인 '편차·이탈')과 거의 동의어지만 deviance는 주로 사회학 용어",
+    etym: "de-(벗어나) + via(길, way) → 정해진 길에서 벗어남 · cf. deviate, obvious, previous"
+  },
+  {
+    word: "diversion",
+    pronun: "/daɪˈvɜːrʒn/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(관심·자원의) 전환" },
+      { num:"②", text:"(영국) 우회로 (= detour)" },
+      { num:"③", text:"기분 전환, 오락거리" }
+    ],
+    sentence: "Traffic was rerouted through a temporary {diversion} while the bridge was repaired.",
+    translation: "그 다리가 수리되는 동안 교통은 임시 우회로를 통해 전환되었다.",
+    syn: ["deviation", "detour", "distraction", "amusement"],
+    deriv: "divert v. 전환시키다, 즐겁게 하다 · diversionary a. 주의를 딴 데로 돌리는",
+    etym: "di-(따로) + vers(돌리다, turn) → 다른 방향으로 돌림 · cf. divert, verse, universe"
+  },
+  {
+    word: "downfall",
+    pronun: "/ˈdaʊnfɔːl/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(지위·권력의) 몰락, 파멸" },
+      { num:"②", text:"(그 원인이 되는) 결정적 요인 (his downfall was ~)" }
+    ],
+    sentence: "His refusal to listen to advice eventually became the cause of his own {downfall}.",
+    translation: "조언에 귀 기울이기를 거부한 것이 결국 그 자신의 몰락의 원인이 되었다.",
+    syn: ["collapse", "ruin", "demise", "undoing"],
+    deriv: "down(아래로) + fall(떨어지다) → 높은 자리에서 아래로 떨어짐",
+    etym: "down(아래로) + fall(추락) → 권세 있던 자리에서 추락함을 나타내는 합성어"
+  },
+  {
+    word: "downward",
+    pronun: "/ˈdaʊnwərd/",
+    pos: "a. / ad.",
+    meanings: [
+      { num:"①", text:"아래쪽으로(의), 하향의 (a downward trend 하향세)" }
+    ],
+    sentence: "Sales have followed a steady {downward} trend since the new competitor entered the market.",
+    translation: "그 새로운 경쟁사가 시장에 진입한 이후로 매출은 꾸준한 하향세를 보이고 있다.",
+    syn: ["descending", "declining", "decreasing"],
+    deriv: "downwards ad. (영국식 부사형) · upward a./ad. 위쪽으로(의) ↔ downward",
+    etym: "down(아래) + -ward(~쪽으로, 방향 접미사) → 아래쪽을 향한 · cf. upward, forward, backward"
+  },
+  {
+    word: "elegance",
+    pronun: "/ˈelɪɡəns/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"우아함, 고상함" },
+      { num:"②", text:"(방법·해법의) 간결하고 세련됨" }
+    ],
+    sentence: "The dress combined simplicity and {elegance}, avoiding any unnecessary decoration.",
+    translation: "그 드레스는 불필요한 장식을 배제한 채 단순함과 우아함을 결합했다.",
+    syn: ["gracefulness", "refinement", "sophistication", "polish"],
+    deriv: "elegant a. 우아한 · elegantly ad. 우아하게",
+    etym: "e-(밖으로) + leg(고르다, choose — legere) → 엄선되어 흠 없이 세련된 상태 · cf. select, elect, eligible"
+  },
+  {
+    word: "endear",
+    pronun: "/ɪnˈdɪr/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"사랑받게 하다, 호감을 사게 하다 (endear A to B)" }
+    ],
+    sentence: "His willingness to admit mistakes quickly {endeared} him to the rest of the team.",
+    translation: "실수를 기꺼이 인정하는 그의 태도는 그를 나머지 팀원들에게 빠르게 호감을 사게 했다.",
+    syn: ["ingratiate", "win over", "charm"],
+    deriv: "endearing a. 사랑스러운, 호감 가는 · endearment n. 애정 표현",
+    etym: "en-(~하게 만들다) + dear(사랑스러운, 소중한) → 소중하게 여겨지게 만들다"
+  },
+  {
+    word: "endowment",
+    pronun: "/ɪnˈdaʊmənt/",
+    pos: "n.",
+    meanings: [
+      { num:"①", text:"(대학·기관에 대한) 기부금, 기금" },
+      { num:"②", text:"(타고난) 재능, 자질" }
+    ],
+    sentence: "The university's {endowment} allows it to offer full scholarships to hundreds of students each year.",
+    translation: "그 대학의 기부 기금 덕분에 매년 수백 명의 학생에게 전액 장학금을 제공할 수 있다.",
+    syn: ["fund", "donation", "gift", "bequest"],
+    deriv: "endow v. 기부하다, (재능을) 부여하다 · endowed a. (재능을) 타고난 (endowed with)",
+    etym: "en-(~하게 만들다) + dow(주다, give — dotare) → 지참금처럼 자산을 주어 갖추게 함 · cf. dowry(지참금)"
+  },
+  {
+    word: "erratic",
+    pronun: "/ɪˈrætɪk/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"(행동·성과가) 변덕스러운, 불규칙한, 종잡을 수 없는" }
+    ],
+    sentence: "His {erratic} behavior in the weeks before the resignation left his coworkers puzzled.",
+    translation: "사임 몇 주 전 그의 변덕스러운 행동은 동료들을 어리둥절하게 만들었다.",
+    syn: ["unpredictable", "inconsistent", "volatile", "irregular"],
+    deriv: "erratically ad. 불규칙하게 · err v. 실수하다 · erroneous a. 잘못된(같은 어근)",
+    etym: "라틴어 errare(방황하다, wander) → 정해진 길 없이 이리저리 헤매는 · cf. error, erroneous, aberrant"
+  },
+  {
+    word: "exemplary",
+    pronun: "/ɪɡˈzempləri/",
+    pos: "a.",
+    meanings: [
+      { num:"①", text:"모범적인, 본보기가 되는" },
+      { num:"②", text:"(처벌이) 일벌백계의, 본보기적인" }
+    ],
+    sentence: "Her {exemplary} conduct during the crisis earned her a formal commendation from the mayor.",
+    translation: "위기 상황에서 보인 그녀의 모범적인 행동은 시장으로부터 공식 표창을 받게 했다.",
+    syn: ["model", "ideal", "commendable", "admirable"],
+    deriv: "exemplify v. 전형을 보여주다 · example n. 예, 사례 · exemplar n. 전형, 본보기",
+    etym: "ex-(밖으로) + em(취하다, take) + -plary → 뽑아낸 본보기로 삼을 만한 · cf. example, exemplify, sample"
+  },
+  {
+    word: "exemplify",
+    pronun: "/ɪɡˈzemplɪfaɪ/",
+    pos: "v.",
+    meanings: [
+      { num:"①", text:"전형적으로 보여주다, 예증하다, ~의 좋은 예가 되다" }
+    ],
+    sentence: "This building perfectly {exemplifies} the architectural style that dominated the city in the 1920s.",
+    translation: "이 건물은 1920년대에 그 도시를 지배했던 건축 양식을 완벽하게 전형적으로 보여준다.",
+    syn: ["illustrate", "epitomize", "typify", "embody"],
+    deriv: "exemplification n. 예증, 예시 · exemplary a. 모범적인(같은 어근) · example n. 예",
+    etym: "example(예시) + -ify(~하게 만들다) → 구체적인 예로 만들어 보여주다 · cf. example, exemplary, exemplar"
+  }
+];
+
+/* ── STATE ───────────────────────────────────────────────────── */
+const state = {
+  deck: [],            // 현재 덱 (DATA 인덱스 배열)
+  pos: 0,              // 덱 내 위치
+  status: {},          // DATA 인덱스 → 'know' | 'review'
+  filter: 'all',
+  seed: null,          // 셔플된 전체 순서 (null이면 원래 순서)
+  autoplay: false,
+  autoSpeak: false,
+  speed: 5000
+};
+
+const $ = id => document.getElementById(id);
+const el = {
+  card: $('card'), stage: $('stage'),
+  fPos: $('fPos'), fSentence: $('fSentence'), fIpa: $('fIpa'),
+  bWord: $('bWord'), bPos: $('bPos'), bIpa: $('bIpa'), bBody: $('bBody'),
+  progressFill: $('progressFill'), progressText: $('progressText'),
+  statKnow: $('statKnow'), statReview: $('statReview'), statNone: $('statNone'),
+  cntAll: $('cntAll'), cntReview: $('cntReview'), cntKnow: $('cntKnow'),
+  grid: $('wordGrid'), empty: $('emptyState'), emptyTitle: $('emptyTitle'), emptyDesc: $('emptyDesc'),
+  btnPrev: $('btnPrev'), btnNext: $('btnNext'), btnFlip: $('btnFlip'),
+  btnKnow: $('btnKnow'), btnReview: $('btnReview'),
+  btnShuffle: $('btnShuffle'), btnAuto: $('btnAuto'), btnAutoSpeak: $('btnAutoSpeak'),
+  btnReset: $('btnReset'), selSpeed: $('selSpeed'), toast: $('toast')
+};
+
+/* ── UTIL ────────────────────────────────────────────────────── */
+function plain(s) { return String(s || '').replace(/[{}]/g, ''); }
+function currentIdx() { return state.deck.length ? state.deck[state.pos] : null; }
+
+let toastTimer = null;
+function toast(msg) {
+  el.toast.textContent = msg;
+  el.toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.toast.classList.remove('show'), 1800);
+}
+
+/* ── TTS (Web Speech API) ────────────────────────────────────── */
+const synth = window.speechSynthesis || null;
+let enVoice = null;
+
+function pickVoice() {
+  if (!synth) return;
+  const vs = synth.getVoices();
+  if (!vs.length) return;
+  enVoice =
+    vs.find(v => /^en[-_]US/i.test(v.lang) && /(Google US English|Samantha|Ava|Aria|Jenny)/i.test(v.name)) ||
+    vs.find(v => /^en[-_]US/i.test(v.lang)) ||
+    vs.find(v => /^en[-_]GB/i.test(v.lang)) ||
+    vs.find(v => /^en/i.test(v.lang)) || null;
+}
+if (synth) {
+  pickVoice();
+  synth.addEventListener('voiceschanged', pickVoice);
+}
+
+let speakingBtn = null;
+function speak(text, btn, rate) {
+  if (!synth) { toast('이 브라우저는 음성 합성(TTS)을 지원하지 않습니다.'); return; }
+  try { synth.cancel(); } catch (e) {}
+  if (speakingBtn) speakingBtn.classList.remove('speaking');
+  speakingBtn = btn || null;
+  if (speakingBtn) speakingBtn.classList.add('speaking');
+
+  const u = new SpeechSynthesisUtterance(plain(text));
+  u.lang = (enVoice && enVoice.lang) || 'en-US';
+  if (enVoice) u.voice = enVoice;
+  u.rate = rate || 0.92;
+  u.pitch = 1;
+  u.onend = u.onerror = () => {
+    if (speakingBtn) speakingBtn.classList.remove('speaking');
+    speakingBtn = null;
+  };
+  synth.speak(u);
+}
+function stopSpeak() {
+  if (synth) { try { synth.cancel(); } catch (e) {} }
+  if (speakingBtn) { speakingBtn.classList.remove('speaking'); speakingBtn = null; }
+}
+function speakWord(btn) { const d = DATA[currentIdx()]; if (d) speak(d.word, btn, 0.85); }
+function speakSentence(btn) { const d = DATA[currentIdx()]; if (d) speak(d.sentence, btn, 0.92); }
+function speakBoth() {
+  const d = DATA[currentIdx()]; if (!d) return;
+  speak(d.word + '. ' + plain(d.sentence), null, 0.92);
+}
+
+/* ── DECK ────────────────────────────────────────────────────── */
+function matchFilter(i) {
+  const s = state.status[i];
+  if (state.filter === 'all') return true;
+  if (state.filter === 'review') return s === 'review';
+  if (state.filter === 'know') return s === 'know';
+  return true;
+}
+function baseOrder() { return state.seed ? state.seed.slice() : DATA.map((_, i) => i); }
+
+function buildDeck(keepIdx) {
+  const prevIdx = (keepIdx !== undefined) ? keepIdx : currentIdx();
+  state.deck = baseOrder().filter(matchFilter);
+  const at = state.deck.indexOf(prevIdx);
+  if (at >= 0) state.pos = at;
+  else state.pos = Math.min(state.pos, Math.max(0, state.deck.length - 1));
+}
+
+/* ── RENDER ──────────────────────────────────────────────────── */
+function renderSentence(t) { return t.replace(/\{([^}]+)\}/g, '<span class="hw">$1</span>'); }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function renderCard() {
+  const idx = currentIdx();
+  const has = idx !== null;
+  el.empty.classList.toggle('show', !has);
+  el.stage.style.visibility = 'visible';
+
+  if (!has) {
+    el.progressText.textContent = '0 / 0';
+    el.progressFill.style.width = '0%';
+    el.btnPrev.disabled = el.btnNext.disabled = true;
+    el.btnKnow.disabled = el.btnReview.disabled = true;
+    el.btnKnow.classList.remove('on'); el.btnReview.classList.remove('on');
+    el.emptyTitle.textContent = state.filter === 'review'
+      ? '"모르겠어요"로 표시한 단어가 없습니다' : (state.filter === 'know' ? '아직 암기 완료한 단어가 없습니다' : '표시할 단어가 없습니다');
+    el.emptyDesc.textContent = '필터를 \u2018전체보기\u2019로 바꾸거나 카드를 분류해 보세요.';
+    setFlip(false);
+    renderChips();
+    return;
+  }
+
+  const d = DATA[idx];
+  el.fPos.textContent = d.pos;
+  el.fSentence.innerHTML = renderSentence(d.sentence);
+  el.fIpa.textContent = d.pronun || '';
+  el.bWord.textContent = d.word;
+  el.bPos.textContent = d.pos;
+  el.bIpa.textContent = d.pronun || '';
+
+  /* 뒷면 구역 조립: 의미 → 예문 → 파생어 → 유의어 → 어근 */
+  let html = '';
+
+  html += '<div class="sec sec-mean"><div class="sec-title">의미 · Meaning</div>';
+  d.meanings.forEach(m => {
+    html += `<div class="meaning-block"><span class="meaning-num">${esc(m.num)} 의미</span><span class="meaning-text">${esc(m.text)}</span></div>`;
+  });
+  html += '</div>';
+
+  const exEng = esc(d.sentence).replace(/\{([^}]+)\}/g, '<strong>$1</strong>');
+  html += '<div class="sec sec-ex">'
+       +  '<div class="sec-head"><div class="sec-title">예문 · Example</div>'
+       +  '<button class="light-icon-btn" data-act="speak-ex" type="button">🔊 예문 듣기</button></div>'
+       +  `<div class="ex-block"><p class="ex-eng">${exEng}</p><p class="ex-kor">${esc(d.translation)}</p></div>`
+       +  '</div>';
+
+  if (d.deriv) {
+    html += '<div class="sec sec-deriv"><div class="sec-title">파생어 · Word Family</div>'
+         +  `<div class="deriv-box">${esc(d.deriv)}</div></div>`;
+  }
+  if (d.syn && d.syn.length) {
+    html += '<div class="sec sec-syn"><div class="sec-title">유의어 · Synonyms</div><div class="syn-wrap">'
+         +  d.syn.map(s => `<span class="syn-chip">${esc(s)}</span>`).join('')
+         +  '</div></div>';
+  }
+  if (d.etym) {
+    html += '<div class="sec sec-etym"><div class="sec-title">어근 · Etymology</div>'
+         +  `<div class="etym-box">${esc(d.etym)}</div></div>`;
+  }
+
+  el.bBody.innerHTML = html;
+  el.bBody.scrollTop = 0;
+
+  const total = state.deck.length;
+  el.progressFill.style.width = ((state.pos + 1) / total * 100) + '%';
+  el.progressText.textContent = `${state.pos + 1} / ${total}`;
+  el.btnPrev.disabled = state.pos === 0;
+  el.btnNext.disabled = state.pos === total - 1;
+  el.btnKnow.disabled = el.btnReview.disabled = false;
+  el.btnKnow.classList.toggle('on', state.status[idx] === 'know');
+  el.btnReview.classList.toggle('on', state.status[idx] === 'review');
+
+  setFlip(false);
+  renderChips();
+  updateStats();
+}
+
+function renderChips() {
+  const cur = currentIdx();
+  el.grid.innerHTML = '';
+  if (!state.deck.length) {
+    el.grid.innerHTML = '<div class="list-empty">조건에 맞는 단어가 없습니다.</div>';
+    return;
+  }
+  const frag = document.createDocumentFragment();
+  state.deck.forEach((di, p) => {
+    const d = DATA[di];
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'word-chip'
+      + (state.status[di] ? ' ' + state.status[di] : '')
+      + (di === cur ? ' active' : '');
+    b.innerHTML = '<span class="badge"></span>' + esc(d.word);
+    b.onclick = () => { stopAuto(); state.pos = p; renderCard(); };
+    frag.appendChild(b);
+  });
+  el.grid.appendChild(frag);
+  const active = el.grid.querySelector('.word-chip.active');
+  if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+}
+
+function updateStats() {
+  let k = 0, r = 0;
+  DATA.forEach((_, i) => {
+    if (state.status[i] === 'know') k++;
+    else if (state.status[i] === 'review') r++;
+  });
+  el.statKnow.textContent = k;
+  el.statReview.textContent = r;
+  el.statNone.textContent = DATA.length - k - r;
+  el.cntAll.textContent = DATA.length;
+  el.cntKnow.textContent = k;
+  el.cntReview.textContent = r;
+}
+
+/* ── FLIP / NAV ──────────────────────────────────────────────── */
+function setFlip(on) { el.card.classList.toggle('flipped', !!on); }
+function isFlipped() { return el.card.classList.contains('flipped'); }
+function flip() {
+  if (!state.deck.length) return;
+  setFlip(!isFlipped());
+  if (state.autoSpeak) {
+    if (isFlipped()) speakWord(null); else speakSentence(null);
+  }
+}
+function go(dir) {
+  if (!state.deck.length) return;
+  const next = state.pos + dir;
+  if (next < 0 || next >= state.deck.length) return;
+  state.pos = next;
+  stopSpeak();
+  renderCard();
+  if (state.autoSpeak) speakSentence(null);
+}
+
+/* ── 학습 상태 분류 ──────────────────────────────────────────── */
+function mark(kind) {
+  const idx = currentIdx();
+  if (idx === null) return;
+  const off = state.status[idx] === kind;
+  if (off) delete state.status[idx]; else state.status[idx] = kind;
+
+  if (state.filter !== 'all') {
+    const keepPos = state.pos;
+    buildDeck(null);
+    state.pos = Math.min(keepPos, Math.max(0, state.deck.length - 1));
+    renderCard();
+    updateStats();
+  } else {
+    updateStats();
+    el.btnKnow.classList.toggle('on', state.status[idx] === 'know');
+    el.btnReview.classList.toggle('on', state.status[idx] === 'review');
+    renderChips();
+    if (!off && state.pos < state.deck.length - 1 && !state.autoplay) {
+      setTimeout(() => go(1), 240);
+    }
+  }
+}
+
+/* ── 셔플 ────────────────────────────────────────────────────── */
+function shuffleDeck() {
+  const arr = DATA.map((_, i) => i);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  state.seed = arr;
+  state.pos = 0;
+  buildDeck(null);
+  state.pos = 0;
+  el.btnShuffle.classList.add('active');
+  el.btnShuffle.textContent = '↩︎ 원래 순서';
+  renderCard();
+  toast('단어 순서를 무작위로 섞었습니다.');
+}
+function unshuffleDeck() {
+  const keep = currentIdx();
+  state.seed = null;
+  buildDeck(keep);
+  el.btnShuffle.classList.remove('active');
+  el.btnShuffle.textContent = '🔀 셔플';
+  renderCard();
+  toast('원래 순서로 되돌렸습니다.');
+}
+
+/* ── 자동 재생 ───────────────────────────────────────────────── */
+let apTimer = null, apPhase = 0;
+function autoTick() {
+  if (!state.deck.length) { stopAuto(); return; }
+  if (apPhase === 0) {
+    setFlip(true);
+    if (state.autoSpeak) speakWord(null);
+    apPhase = 1;
+  } else {
+    if (state.pos >= state.deck.length - 1) {
+      stopAuto();
+      toast('마지막 카드입니다. 자동재생을 종료합니다.');
+      return;
+    }
+    state.pos++;
+    renderCard();
+    if (state.autoSpeak) speakSentence(null);
+    apPhase = 0;
+  }
+}
+function startAuto() {
+  if (!state.deck.length) { toast('재생할 카드가 없습니다.'); return; }
+  state.autoplay = true;
+  apPhase = 0;
+  el.btnAuto.classList.add('playing');
+  el.btnAuto.textContent = '⏸ 정지';
+  if (state.autoSpeak) speakSentence(null);
+  clearInterval(apTimer);
+  apTimer = setInterval(autoTick, state.speed);
+  toast(`자동재생 시작 · ${state.speed / 1000}초 간격`);
+}
+function stopAuto() {
+  if (!state.autoplay) return;
+  state.autoplay = false;
+  clearInterval(apTimer); apTimer = null;
+  el.btnAuto.classList.remove('playing');
+  el.btnAuto.textContent = '▶ 자동재생';
+  stopSpeak();
+}
+function toggleAuto() { state.autoplay ? stopAuto() : startAuto(); }
+
+/* ── 이벤트 바인딩 ───────────────────────────────────────────── */
+let suppressClick = false;
+
+el.stage.addEventListener('click', e => {
+  if (suppressClick) return;
+  if (e.target.closest('button')) return;   // 카드 내부 버튼은 뒤집기 제외
+  stopAuto();
+  flip();
+});
+
+/* 카드 내부 스피커 버튼 */
+$('fSpeakWord').addEventListener('click', e => { e.stopPropagation(); stopAuto(); speakWord(e.currentTarget); });
+$('fSpeakSent').addEventListener('click', e => { e.stopPropagation(); stopAuto(); speakSentence(e.currentTarget); });
+$('bSpeakWord').addEventListener('click', e => { e.stopPropagation(); stopAuto(); speakWord(e.currentTarget); });
+el.bBody.addEventListener('click', e => {
+  const b = e.target.closest('[data-act="speak-ex"]');
+  if (!b) return;
+  e.stopPropagation(); stopAuto(); speakSentence(b);
+});
+
+el.btnPrev.addEventListener('click', () => { stopAuto(); go(-1); });
+el.btnNext.addEventListener('click', () => { stopAuto(); go(1); });
+el.btnFlip.addEventListener('click', () => { stopAuto(); flip(); });
+el.btnKnow.addEventListener('click', () => { stopAuto(); mark('know'); });
+el.btnReview.addEventListener('click', () => { stopAuto(); mark('review'); });
+el.btnShuffle.addEventListener('click', () => { stopAuto(); state.seed ? unshuffleDeck() : shuffleDeck(); });
+el.btnAuto.addEventListener('click', toggleAuto);
+el.btnAutoSpeak.addEventListener('click', () => {
+  state.autoSpeak = !state.autoSpeak;
+  el.btnAutoSpeak.classList.toggle('active', state.autoSpeak);
+  toast(state.autoSpeak ? '자동 발음 ON' : '자동 발음 OFF');
+  if (!state.autoSpeak) stopSpeak();
+});
+el.selSpeed.addEventListener('change', e => {
+  state.speed = parseInt(e.target.value, 10);
+  if (state.autoplay) { clearInterval(apTimer); apTimer = setInterval(autoTick, state.speed); }
+  toast(`자동재생 간격 ${state.speed / 1000}초`);
+});
+el.btnReset.addEventListener('click', () => {
+  if (!Object.keys(state.status).length) { toast('초기화할 학습 기록이 없습니다.'); return; }
+  if (!confirm('알아요 / 모르겠어요 분류를 모두 지울까요?')) return;
+  stopAuto();
+  state.status = {};
+  state.filter = 'all';
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.f === 'all'));
+  buildDeck(null);
+  renderCard();
+  toast('학습 상태를 초기화했습니다.');
+});
+
+/* 필터 탭 */
+$('filterTabs').addEventListener('click', e => {
+  const t = e.target.closest('.tab');
+  if (!t) return;
+  stopAuto();
+  state.filter = t.dataset.f;
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
+  const keep = currentIdx();
+  buildDeck(matchFilter(keep) ? keep : null);
+  if (!matchFilter(keep)) state.pos = 0;
+  renderCard();
+});
+
+/* 키보드 */
+document.addEventListener('keydown', e => {
+  const tag = (e.target.tagName || '').toUpperCase();
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+  const k = e.key.toLowerCase();
+  if (e.key === 'ArrowRight') { stopAuto(); go(1); }
+  else if (e.key === 'ArrowLeft') { stopAuto(); go(-1); }
+  else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); stopAuto(); flip(); }
+  else if (k === 'k') { stopAuto(); mark('know'); }
+  else if (k === 'j' || k === 'r') { stopAuto(); mark('review'); }
+  else if (k === 'v') { stopAuto(); isFlipped() ? speakWord(null) : speakSentence(null); }
+  else if (k === 's') { stopAuto(); state.seed ? unshuffleDeck() : shuffleDeck(); }
+  else if (k === 'p') { e.preventDefault(); toggleAuto(); }
+});
+
+/* 터치 스와이프: 좌우 = 이전/다음, 상하 = 뒤집기 */
+let tx = 0, ty = 0, tt = 0, fromScroll = false;
+el.stage.addEventListener('touchstart', e => {
+  const t = e.changedTouches[0];
+  tx = t.clientX; ty = t.clientY; tt = Date.now();
+  const sc = e.target.closest('.back-body, .front-body');
+  fromScroll = !!(sc && sc.scrollHeight > sc.clientHeight + 4);
+}, { passive: true });
+
+el.stage.addEventListener('touchend', e => {
+  const t = e.changedTouches[0];
+  const dx = t.clientX - tx, dy = t.clientY - ty, dt = Date.now() - tt;
+  const ax = Math.abs(dx), ay = Math.abs(dy);
+  if (dt > 900) return;
+  if (ax < 45 && ay < 45) return;            // 탭으로 처리 → click 핸들러가 뒤집음
+  suppressClick = true;
+  setTimeout(() => { suppressClick = false; }, 450);
+  stopAuto();
+  if (ax > ay * 1.2) { dx < 0 ? go(1) : go(-1); }
+  else if (!fromScroll && ay > 55) { flip(); }
+}, { passive: true });
+
+/* ── INIT ────────────────────────────────────────────────────── */
+buildDeck(null);
+renderCard();
+updateStats();
+</script>
+</body>
+</html>
